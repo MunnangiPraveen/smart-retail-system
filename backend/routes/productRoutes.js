@@ -7,115 +7,81 @@ const db = require("../config/db");
 
 // GET ALL PRODUCTS
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
 
-    const sql =
-        `
-        SELECT *
-        FROM products
-        ORDER BY product_id DESC
-        `;
+    try {
 
-    db.query(sql, (err, result) => {
+        const [products] = await db.query(
 
-        if (err) {
+            `
+            SELECT *
+            FROM products
+            ORDER BY product_id DESC
+            `
+        );
 
-            console.log(err);
+        res.json(products);
 
-            return res.status(500).json({
+    } catch (err) {
 
-                message:
-                    "Failed To Fetch Products"
+        console.log(err);
 
-            });
+        res.status(500).json({
 
-        }
+            message:
+                "Failed To Fetch Products"
 
-        res.json(result);
+        });
 
-    });
+    }
 
 });
 
 
 // GET SINGLE PRODUCT
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
 
-    const { id } = req.params;
+    try {
 
-    const sql =
+        const { id } = req.params;
 
-        `
-        SELECT *
-        FROM products
-        WHERE product_id = ?
-        `;
+        const [product] = await db.query(
 
-    db.query(
+            `
+            SELECT *
+            FROM products
+            WHERE product_id = ?
+            `,
+            [id]
 
-        sql,
+        );
 
-        [id],
+        res.json(product);
 
-        (err, result) => {
+    } catch (err) {
 
-            if (err) {
+        console.log(err);
 
-                console.log(err);
+        res.status(500).json({
 
-                return res.status(500).json({
+            message:
+                "Failed To Fetch Product"
 
-                    message:
-                        "Failed To Fetch Product"
+        });
 
-                });
-
-            }
-
-            res.json(result);
-
-        }
-
-    );
+    }
 
 });
 
 
 // ADD PRODUCT
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
 
-    const {
+    try {
 
-        product_name,
-
-        description,
-
-        price,
-
-        image_url
-
-    } = req.body;
-
-    const sql =
-
-        `
-        INSERT INTO products
-        (
-            product_name,
-            description,
-            price,
-            image_url
-        )
-        VALUES (?, ?, ?, ?)
-        `;
-
-    db.query(
-
-        sql,
-
-        [
+        const {
 
             product_name,
 
@@ -125,77 +91,66 @@ router.post("/", (req, res) => {
 
             image_url
 
-        ],
+        } = req.body;
 
-        (err, result) => {
+        await db.query(
 
-            if (err) {
+            `
+            INSERT INTO products
+            (
+                product_name,
+                description,
+                price,
+                image_url
+            )
+            VALUES (?, ?, ?, ?)
+            `,
+            [
 
-                console.log(err);
+                product_name,
 
-                return res.status(500).json({
+                description,
 
-                    message:
-                        "Failed To Add Product"
+                price,
 
-                });
+                image_url
 
-            }
+            ]
 
-            res.json({
+        );
 
-                message:
-                    "Product Added Successfully"
+        res.json({
 
-            });
+            message:
+                "Product Added Successfully"
 
-        }
+        });
 
-    );
+    } catch (err) {
+
+        console.log(err);
+
+        res.status(500).json({
+
+            message:
+                "Failed To Add Product"
+
+        });
+
+    }
 
 });
 
 
 // UPDATE PRODUCT
 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
 
-    const { id } = req.params;
+    try {
 
-    const {
+        const { id } = req.params;
 
-        product_name,
-
-        description,
-
-        price,
-
-        image_url
-
-    } = req.body;
-
-    const sql =
-
-        `
-        UPDATE products
-        SET
-
-            product_name = ?,
-
-            description = ?,
-
-            price = ?,
-
-            image_url = ?
-
-        WHERE product_id = ?
-        `;
-
-    db.query(
-
-        sql,
-
-        [
+        const {
 
             product_name,
 
@@ -203,85 +158,102 @@ router.put("/:id", (req, res) => {
 
             price,
 
-            image_url,
+            image_url
 
-            id
+        } = req.body;
 
-        ],
+        await db.query(
 
-        (err, result) => {
+            `
+            UPDATE products
+            SET
 
-            if (err) {
+                product_name = ?,
 
-                console.log(err);
+                description = ?,
 
-                return res.status(500).json({
+                price = ?,
 
-                    message:
-                        "Failed To Update Product"
+                image_url = ?
 
-                });
+            WHERE product_id = ?
+            `,
+            [
 
-            }
+                product_name,
 
-            res.json({
+                description,
 
-                message:
-                    "Product Updated Successfully"
+                price,
 
-            });
+                image_url,
 
-        }
+                id
 
-    );
+            ]
+
+        );
+
+        res.json({
+
+            message:
+                "Product Updated Successfully"
+
+        });
+
+    } catch (err) {
+
+        console.log(err);
+
+        res.status(500).json({
+
+            message:
+                "Failed To Update Product"
+
+        });
+
+    }
 
 });
 
 
 // DELETE PRODUCT
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
 
-    const { id } = req.params;
+    try {
 
-    const sql =
+        const { id } = req.params;
 
-        `
-        DELETE FROM products
-        WHERE product_id = ?
-        `;
+        await db.query(
 
-    db.query(
+            `
+            DELETE FROM products
+            WHERE product_id = ?
+            `,
+            [id]
 
-        sql,
+        );
 
-        [id],
+        res.json({
 
-        (err, result) => {
+            message:
+                "Product Deleted Successfully"
 
-            if (err) {
+        });
 
-                console.log(err);
+    } catch (err) {
 
-                return res.status(500).json({
+        console.log(err);
 
-                    message:
-                        "Failed To Delete Product"
+        res.status(500).json({
 
-                });
+            message:
+                "Failed To Delete Product"
 
-            }
+        });
 
-            res.json({
-
-                message:
-                    "Product Deleted Successfully"
-
-            });
-
-        }
-
-    );
+    }
 
 });
 
