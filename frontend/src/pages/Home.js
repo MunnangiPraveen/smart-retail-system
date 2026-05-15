@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
 import React from "react";
 
 import {
@@ -12,8 +10,6 @@ import {
 import "../styles/home.css";
 
 function Home() {
-
-    const navigate = useNavigate();
 
     return (
 
@@ -45,10 +41,7 @@ function Home() {
 
                     <div className="hero-buttons">
 
-                        <button
-                            className="shop-btn"
-                            onClick={() => navigate("/products")}
-                        >
+                        <button className="shop-btn">
 
                             Shop Now
 
@@ -56,10 +49,7 @@ function Home() {
 
                         </button>
 
-                        <button
-                            className="explore-btn"
-                            onClick={() => navigate("/products")}
-                        >
+                        <button className="explore-btn">
 
                             Explore Products
 
@@ -146,10 +136,7 @@ function Home() {
 
                     </div>
 
-                    <button
-                        className="view-all-btn"
-                        onClick={() => navigate("/products")}
-                    >
+                    <button className="view-all-btn">
 
                         View All
 
@@ -194,9 +181,7 @@ function Home() {
 
                             </div>
 
-                            <button
-                                onClick={() => navigate("/products")}
-                            >
+                            <button>
                                 Add To Cart
                             </button>
 
@@ -239,9 +224,7 @@ function Home() {
 
                             </div>
 
-                            <button
-                                onClick={() => navigate("/products")}
-                            >
+                            <button>
                                 Add To Cart
                             </button>
 
@@ -284,9 +267,7 @@ function Home() {
 
                             </div>
 
-                            <button
-                                onClick={() => navigate("/products")}
-                            >
+                            <button>
                                 Add To Cart
                             </button>
 
@@ -320,11 +301,7 @@ function Home() {
 
                 <div className="categories-grid">
 
-                    <div
-                        className="category-card large-card"
-                        onClick={() => navigate("/products")}
-                        style={{ cursor: "pointer" }}
-                    >
+                    <div className="category-card large-card">
 
                         <img
                             src="https://images.unsplash.com/photo-1441986300917-64674bd600d8"
@@ -347,11 +324,7 @@ function Home() {
 
                     </div>
 
-                    <div
-                        className="category-card"
-                        onClick={() => navigate("/products")}
-                        style={{ cursor: "pointer" }}
-                    >
+                    <div className="category-card">
 
                         <img
                             src="https://images.unsplash.com/photo-1523275335684-37898b6baf30"
@@ -370,11 +343,7 @@ function Home() {
 
                     </div>
 
-                    <div
-                        className="category-card"
-                        onClick={() => navigate("/products")}
-                        style={{ cursor: "pointer" }}
-                    >
+                    <div className="category-card">
 
                         <img
                             src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
