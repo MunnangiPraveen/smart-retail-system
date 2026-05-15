@@ -283,6 +283,9 @@ function Products() {
 
                                 <Link
                                     to={`/products/${product.product_id}`}
+                                    onClick={() =>
+                                        window.scrollTo(0, 0)
+                                    }
                                 >
 
                                     View Details
