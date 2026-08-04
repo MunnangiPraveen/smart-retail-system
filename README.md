@@ -1,6 +1,6 @@
-# smart-retail-system
+# retail-system
 
-# Smart Retail Ecommerce Platform
+#  Retail Ecommerce Platform
 
 A full-stack ecommerce web application developed using React.js, Node.js, Express.js, and MySQL that provides a modern online shopping experience with authentication, product management, cart functionality, order tracking, payment simulation, and user dashboard features.
 
